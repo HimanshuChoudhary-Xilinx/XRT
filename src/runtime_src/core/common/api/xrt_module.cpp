@@ -723,7 +723,9 @@ class module_elf : public module_impl
         static constexpr const char* ctrlpkt_pm_dynsym = "ctrlpkt-pm";
         if (std::string(symname).find(ctrlpkt_pm_dynsym) != std::string::npos) {
           // store ctrlpkt preemption symbols which is later used for patching instr buf
-          m_ctrlpkt_pm_dynsyms.emplace_back(symname);
+          auto ctrlpkt_it = find(m_ctrlpkt_pm_dynsyms.begin(), m_ctrlpkt_pm_dynsyms.end(), symname);
+          if (ctrlpkt_it == m_ctrlpkt_pm_dynsyms.end())
+            m_ctrlpkt_pm_dynsyms.emplace_back(symname);
         }
 
         // Get control code section referenced by the symbol, col, and page
